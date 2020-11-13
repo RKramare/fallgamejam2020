@@ -1,26 +1,17 @@
 platform = {}
-player = {}
- 
+
+
+require "player"
+
+
 function love.load()
 	platform.width = love.graphics.getWidth()
 	platform.height = love.graphics.getHeight()
  
 	platform.x = 0
-	platform.y = platform.height / 2
- 
-	player.x = love.graphics.getWidth() / 2
-	player.y = love.graphics.getHeight() / 2
- 
-	player.speed = 200
- 
-	player.img = love.graphics.newImage('res/purple.png')
- 
-	player.ground = player.y
- 
-	player.y_velocity = 0
- 
-	player.jump_height = -300
-	player.gravity = -500
+    platform.y = platform.height / 2
+    
+    player = createPlayer()
 end
  
 function love.update(dt)

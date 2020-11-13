@@ -1,4 +1,4 @@
-function new()
+function createPlayer()
     player = {}
 
     player.x = love.graphics.getWidth() / 2
@@ -6,7 +6,7 @@ function new()
 
     player.speed = 200
 
-    player.img = love.graphics.newImage('purple.png')
+    player.img = love.graphics.newImage('res/purple.png')
 
     player.ground = player.y
 
