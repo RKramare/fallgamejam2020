@@ -18,5 +18,9 @@ function loadPlayer()
     player.jump_height = -350
     player.gravity = -500
 
+    player.body = love.physics.newBody(world, player.x - player.width / 2, player.y - player.height / 2, "dynamic")
+    player.shape = love.physics.newRectangleShape(player.width, player.height)
+    player.fixture = love.physics.newFixture(player.body, player.shape)
+
     return player
 end

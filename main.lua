@@ -1,11 +1,20 @@
 function love.load()
     require "player"
-    require "platform"
+	require "platform"
+	
+    setWorldPhysics()
     
     player = loadPlayer()
-    platform = loadPlatform()
+	platform = loadPlatform()
+
 end
  
+function setWorldPhysics()
+	love.physics.setMeter(32)
+	world = love.physics.newWorld(0, 9.82*32, true)
+	objects = {}
+end
+
 function love.update(dt)
 	controllPlayer(dt)
 end
@@ -41,6 +50,7 @@ end
 function love.draw()
 	drawStage()
 	drawPlayer()
+	drawGround()
 end
 
 function drawStage()
@@ -58,3 +68,7 @@ function drawPlayer()
 	love.graphics.draw(player.img, player.x, player.y, 0, 1, 1, 0, 32)
 end
 
+function drawGround()
+	love.graphics.setColor(0.28, 0.63, 0.05)
+	love.graphics.polygon("fill", player.body:getWorldPoints(player.shape:getPoints()))
+end
