@@ -1,17 +1,8 @@
-platform = {}
-
-
-require "player"
-
-
 function love.load()
-	platform.width = love.graphics.getWidth()
-	platform.height = love.graphics.getHeight()
- 
-	platform.x = 0
-    platform.y = platform.height / 2
-    
-    player = createPlayer()
+    require "player"
+    require "platform"
+    player = loadPlayer()
+    platform = loadPlatform()
 end
  
 function love.update(dt)

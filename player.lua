@@ -1,4 +1,4 @@
-function createPlayer()
+function loadPlayer()
     player = {}
 
     player.x = love.graphics.getWidth() / 2
