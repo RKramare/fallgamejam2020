@@ -1,6 +1,7 @@
 function love.load()
     require "player"
     require "platform"
+    
     player = loadPlayer()
     platform = loadPlatform()
 end
@@ -35,7 +36,12 @@ end
  
 function love.draw()
 	love.graphics.setColor(1, 1, 1)
-	love.graphics.rectangle('fill', platform.x, platform.y, platform.width, platform.height)
- 
+	for h=1, #platform.currentStage do
+		for w=1, #platform.currentStage[h] do
+			if platform.currentStage[h][w] == 1 then
+				love.graphics.rectangle("fill", (w-1)*platform.cubeWidth, (h-1)*platform.cubeHeight, platform.cubeWidth, platform.cubeHeight)
+			end
+		end
+	end
 	love.graphics.draw(player.img, player.x, player.y, 0, 1, 1, 0, 32)
 end
