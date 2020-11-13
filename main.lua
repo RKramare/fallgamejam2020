@@ -38,8 +38,8 @@ function love.draw()
 	love.graphics.setColor(1, 1, 1)
 	for h=1, #platform.currentStage do
 		for w=1, #platform.currentStage[h] do
-			if platform.currentStage[h][w] == 1 then
-				love.graphics.rectangle("fill", (w-1)*platform.cubeWidth, (h-1)*platform.cubeHeight, platform.cubeWidth, platform.cubeHeight)
+			if platform.currentStage[h][w] ~= 0 then
+				platform.keys[platform.currentStage[h][w]](w, h)
 			end
 		end
 	end
