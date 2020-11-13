@@ -13,7 +13,7 @@ function love.load()
  
 	player.speed = 200
  
-	player.img = love.graphics.newImage('purple.png')
+	player.img = love.graphics.newImage('res/purple.png')
  
 	player.ground = player.y
  
