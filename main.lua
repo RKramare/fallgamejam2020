@@ -7,6 +7,10 @@ function love.load()
 end
  
 function love.update(dt)
+	controllPlayer(dt)
+end
+
+function controllPlayer(dt)
 	if love.keyboard.isDown('d') then
 		if player.x < (love.graphics.getWidth() - player.img:getWidth()) then
 			player.x = player.x + (player.speed * dt)
@@ -35,6 +39,11 @@ function love.update(dt)
 end
  
 function love.draw()
+	drawStage()
+	drawPlayer()
+end
+
+function drawStage()
 	love.graphics.setColor(1, 1, 1)
 	for h=1, #platform.currentStage do
 		for w=1, #platform.currentStage[h] do
@@ -43,5 +52,9 @@ function love.draw()
 			end
 		end
 	end
+end
+
+function drawPlayer()
 	love.graphics.draw(player.img, player.x, player.y, 0, 1, 1, 0, 32)
 end
+
