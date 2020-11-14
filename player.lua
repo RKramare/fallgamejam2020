@@ -19,7 +19,7 @@ function loadPlayer(x, y)
     player.fixture = love.physics.newFixture(player.body, player.shape)
 
     -- Create Wheel
-    player.wheelShape = love.physics.newCircleShape(0, 25, 7)
+    player.wheelShape = love.physics.newCircleShape(0, 20, 8)
     player.wheelFixture = love.physics.newFixture(player.body, player.wheelShape)
 
     -- Set up sprite
