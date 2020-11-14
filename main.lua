@@ -1,22 +1,25 @@
 function love.load()
     require "player"
 	require "platformCreator"
-	require "box"
+	require "collisionBox"
 	require "sprite"
 
 	sprite = loadSprite("res/rasmus.png", 32, 64)
 	
     setWorldPhysics()
     
-    player = loadPlayer()
+	player = loadPlayer(32, 3*32)
+	
+	require "sprite"
+	spriteGround = loadSprite("res/ground1.png", 32, 32)
 	platforms = {}
-	table.insert(platforms, createPlatform(0, 0, 20, 9))
-	table.insert(platforms, createPlatform(4*32, 0, 1, 1))
-	table.insert(platforms, createPlatform(6*32, 0, 1, 3))
-	table.insert(platforms, createPlatform(8*32, 0, 3, 1))
+	table.insert(platforms, createPlatform(0, 5*32, 3, 3, spriteGround))
+	table.insert(platforms, createPlatform(4*32, 5*32, 1, 1, spriteGround))
+	table.insert(platforms, createPlatform(6*32, 5*32, 1, 3, spriteGround))
+	table.insert(platforms, createPlatform(8*32, 5*32, 3, 1, spriteGround))
 	
 	
-	createBoxes()
+	--createBoxes()
 end
  
 function setWorldPhysics()
@@ -77,7 +80,7 @@ end
 function love.draw()
 	--drawStage()
 	drawPlayer()
-	drawGround()
+	--drawGround()
 	for i,pl in ipairs(platforms) do
 		pl.draw()
 	end

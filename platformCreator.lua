@@ -1,16 +1,17 @@
-function createPlatform(x, y, width, height)
+function createPlatform(x, y, width, height, sprite)
     require "point"
+    require "collisionBox"
     local platform = {}
 
-    platform.x = x
-    platform.y = y
-    platform.width = width
-    platform.width = height
+    platform.collisionBox = createCollisionBox(x, y, width, height)
+    platform.x, platform.y = platform.collisionBox.body:getPosition()
+    platform.width = platform.collisionBox.width
+    platform.height = platform.collisionBox.height
 
     platform.scale = 1
 
-    local form = {}
 
+    local form = {}
     if width == 1 and height == 1 then 
         -- single block
         form = {{Point(3,3)}}
@@ -66,21 +67,19 @@ function createPlatform(x, y, width, height)
             table.insert(form, currentRow)
         end
     end
+    
 
-
-
-    function platform.draw()
-        require "sprite"
-        sprite = loadSprite("res/ground1.png", 32, 32)
-        
+    function platform.draw()        
         love.graphics.setColor(1,1,1,1)
         for row=1,height do
             for col=1,width do
-                love.graphics.draw(sprite.img, sprite.getFromPoint(form[row][col]), col*32 + platform.x, row*32 + platform.y)
+                love.graphics.draw(sprite.img, sprite.getFromPoint(form[row][col]), 
+                (col-1)*32 + platform.x - platform.width/2, (row-1)*32 + platform.y - platform.height/2)
             end
         end
+		love.graphics.setColor(platform.collisionBox.color)
+		love.graphics.polygon("line", platform.collisionBox.body:getWorldPoints(platform.collisionBox.shape:getPoints()))
     end
 
     return platform 
 end
-

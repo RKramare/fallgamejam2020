@@ -1,8 +1,8 @@
-function loadPlayer()
+function loadPlayer(x, y)
     player = {}
 
-    player.x = love.graphics.getWidth() / 2
-    player.y = love.graphics.getHeight() / 2
+    player.x = x
+    player.y = y
 
     player.color = {1, 1, 1, 1}
 
