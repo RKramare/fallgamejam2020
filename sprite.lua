@@ -8,5 +8,10 @@ function loadSprite(fileName, blockWidth, blockHeight)
         return love.graphics.newQuad(blockWidth*x, blockHeight*y, blockWidth, blockHeight, sprite.img:getDimensions())
     end
 
+    require "point"
+    function sprite.getFromPoint(point)
+        return love.graphics.newQuad(blockWidth*point.x, blockHeight*point.y, blockWidth, blockHeight, sprite.img:getDimensions())
+    end
+
     return sprite
 end

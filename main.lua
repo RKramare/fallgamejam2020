@@ -1,6 +1,6 @@
 function love.load()
     require "player"
-	require "platform"
+	require "platformCreator"
 	require "box"
 	require "sprite"
 
@@ -9,7 +9,12 @@ function love.load()
     setWorldPhysics()
     
     player = loadPlayer()
-	platform = loadPlatform()
+	platforms = {}
+	table.insert(platforms, createPlatform(0, 0, 20, 9))
+	table.insert(platforms, createPlatform(4*32, 0, 1, 1))
+	table.insert(platforms, createPlatform(6*32, 0, 1, 3))
+	table.insert(platforms, createPlatform(8*32, 0, 3, 1))
+	
 	
 	createBoxes()
 end
@@ -70,9 +75,12 @@ end
 
  
 function love.draw()
-	drawStage()
+	--drawStage()
 	drawPlayer()
 	drawGround()
+	for i,pl in ipairs(platforms) do
+		pl.draw()
+	end
 end
 
 function drawStage()
