@@ -1,14 +1,22 @@
 function createLevel()  
-    local level = {}
-    gridX, gridY = 32, 32
-    width =  love.graphics.getWidth()
-    height = love.graphics.getHeight()
-
+    --Setup
     require "sprite"
+    require "enemy"
 	spriteGround = loadSprite("res/ground1.png", 32, 32)
 	spriteAsphalt = loadSprite("res/asphalt.png", 32, 32)
 	spriteSidewalk = loadSprite("res/sidewalk.png", 32, 32)
+
+    local level = {}
     level.platforms = {}
+    level.enemies = {}
+
+    addPlatformsToLevel(level)
+    addEnemiesToLevel(level)
+
+    return level
+end
+
+function addPlatformsToLevel(level)
     table.insert(level.platforms, createPlatform(0, 17, 150, 2, spriteGround))
     
 	table.insert(level.platforms, createPlatform(8, 15, 4, 2, spriteAsphalt))
@@ -16,16 +24,8 @@ function createLevel()
     
 	table.insert(level.platforms, createPlatform(15, 13, 4, 2, spriteSidewalk))
 	table.insert(level.platforms, createPlatform(14, 14, 1, 1, spriteSidewalk))
+end
 
-
-    function level.draw()
-        for col=1, width/gridX, gridX do
-            love.graphics.line(col, 0, col, height)
-        end
-        for row=1, height/gridY, gridY do
-            love.graphics.line(0, row, width, row)
-        end
-    end
-
-    return level
+function addEnemiesToLevel(level)
+    table.insert(level.enemies, createEnemy(15*32, 11*32))
 end
