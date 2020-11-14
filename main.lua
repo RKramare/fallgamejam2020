@@ -21,13 +21,7 @@ end
 function love.update(dt)
 	world:update(dt)
 	player.update(dt)
-	updatePlatforms(dt)
-end
-
-function updatePlatforms(dt)
-	for i,pl in ipairs(level.platforms) do
-		pl.update(dt, player)
-	end
+	updateX(dt)
 end
 
 function love.draw()
@@ -45,5 +39,39 @@ end
 function drawEnemies()
 	for i,enemy in ipairs(level.enemies) do
 		enemy.draw()
+	end
+end
+
+function updateX(dt)
+	playerDistFromMiddle = (player.body:getX() - love.graphics.getWidth()/2) / (love.graphics.getWidth()/2 )
+    playerChange, platformChange, enemyChange = 0, 0, 0
+	margin = 0.3
+	if math.abs(playerDistFromMiddle) > margin then
+		if playerDistFromMiddle > 0 then
+			playerDistFromMiddle = playerDistFromMiddle - margin
+		else
+			playerDistFromMiddle = playerDistFromMiddle + margin
+		end
+		multi = -playerDistFromMiddle * player.topSpeed * 2
+
+		playerChange = dt * multi / 1
+		platformChange = dt * multi
+		enemyChange = platformChange
+
+		player.body:setX(player.body:getX() + playerChange)
+		updatePlatforms(platformChange)
+		updateEnemies(enemyChange)
+	end
+end
+
+function updatePlatforms(dt)
+	for i,pl in ipairs(level.platforms) do
+		pl.setX(dt)
+	end
+end
+
+function updateEnemies(dt)
+	for i,en in ipairs(level.enemies) do
+		en.setX(dt)
 	end
 end

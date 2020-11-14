@@ -27,10 +27,15 @@ function createPlatform(x, y, width, height, sprite)
     end
 
     function platform.update(dt, player)
-        platform.setX(dt, player)
+        --platform.setX(dt, player)
     end
 
-    function platform.setX(dt, player)
+    function platform.setX(x)
+        platform.x = platform.x + x
+        platform.collisionBox.body:setX(platform.collisionBox.body:getX() + x)
+    end
+
+        --[[
         playerDistFromMiddle = (player.body:getX() - love.graphics.getWidth()/2) / (love.graphics.getWidth()/2 )
         
         margin = 0.3
@@ -47,8 +52,9 @@ function createPlatform(x, y, width, height, sprite)
             platform.x = platform.x + dt * multi
             platform.collisionBox.body:setX(platform.collisionBox.body:getX() + dt * multi)
         end
+        --]]
         
-    end
+
 
     return platform
 end
