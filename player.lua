@@ -4,6 +4,11 @@ function loadPlayer()
     player.x = love.graphics.getWidth() / 2
     player.y = love.graphics.getHeight() / 2
 
+    player.color = {1, 0, 0, 1}
+
+    player.isTouching = true
+    player.isOnFloor = true
+
     player.speed = 200
 
     player.img = love.graphics.newImage('res/purple.png')
@@ -18,9 +23,13 @@ function loadPlayer()
     player.jump_height = -350
     player.gravity = -500
 
-    player.body = love.physics.newBody(world, player.x - player.width / 2, player.y - player.height / 2, "dynamic")
+    player.body = love.physics.newBody(world, player.x + player.width / 2, player.y - player.height / 2, "dynamic")
+    player.body:setFixedRotation(true)
+    player.body:setMass(100)
     player.shape = love.physics.newRectangleShape(player.width, player.height)
     player.fixture = love.physics.newFixture(player.body, player.shape)
+    player.fixture:setUserData("Player")
+
 
     return player
 end
