@@ -3,10 +3,11 @@ function createPlatform(x, y, width, height, sprite)
     require "collisionBox"
     local platform = {}
 
-    platform.collisionBox = createCollisionBox(x, y, width, height)
-    platform.x, platform.y = platform.collisionBox.body:getPosition()
-    platform.width = platform.collisionBox.width
-    platform.height = platform.collisionBox.height
+    platform.x, platform.y = x*32, y*32
+    platform.width = width*32
+    platform.height = height*32
+
+    platform.collisionBox = createCollisionBox(platform.x + platform.width/2, platform.y + platform.height/2 , width, height)
 
     platform.scale = 1
 
@@ -17,11 +18,12 @@ function createPlatform(x, y, width, height, sprite)
         for row=1,height do
             for col=1,width do
                 love.graphics.draw(sprite.img, sprite.getFromPoint(platform.form[row][col]), 
-                (col-1)*32 + platform.x - platform.width/2, (row-1)*32 + platform.y - platform.height/2)
+                (col-1)*32 + platform.x, (row-1)*32 + platform.y)
             end
         end
-		love.graphics.setColor(platform.collisionBox.color)
-		love.graphics.polygon("line", platform.collisionBox.body:getWorldPoints(platform.collisionBox.shape:getPoints()))
+        -- Draw collision box:
+		--love.graphics.setColor(platform.collisionBox.color)
+		--love.graphics.polygon("line", platform.collisionBox.body:getWorldPoints(platform.collisionBox.shape:getPoints()))
     end
 
     function platform.update(dt)
@@ -33,8 +35,9 @@ function createPlatform(x, y, width, height, sprite)
     end
 
     function platform.setX(x)
-        platform.collisionBox.body:setX(platform.collisionBox.body:getX()+x*30)
-        platform.x, platform.y = platform.collisionBox.body:getPosition()
+        delta = 330
+        platform.x = platform.x + x * delta
+        platform.collisionBox.body:setX(platform.collisionBox.body:getX() + x * delta)
     end
 
     return platform 
