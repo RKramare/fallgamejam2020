@@ -9,7 +9,7 @@ function createCollisionBox(x, y, width, height)
 
 	box.width = width * scaleW
 	box.height = height * scaleH
-	box.x, box.y = box.body:getPosition()
+	box.x, box.y = x, y
 
     box.color = {1, 0.5, 0.5, 1}
     box.state = "line"

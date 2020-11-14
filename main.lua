@@ -6,7 +6,7 @@ function love.load()
 	require "level01"
 
     setWorldPhysics()
-	player = loadPlayer(32, 3*32)
+	player = loadPlayer(love.graphics.getWidth()/2, love.graphics.getHeight()/2)
 	level = createLevel()
 end
  
@@ -32,6 +32,7 @@ end
 function love.draw()
 	drawPlatforms()
 	player.draw()
+	level.draw()
 end
 
 function drawPlatforms()
