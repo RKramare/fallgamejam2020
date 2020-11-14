@@ -35,6 +35,10 @@ function controllPlayer(dt)
 			player.y_velocity = player.jump_height
 		end
 	end
+
+	if love.keyboard.isDown('c') then
+		platform.increaseLevel()
+	end
  
 	if player.y_velocity ~= 0 then
 		player.y = player.y + player.y_velocity * dt
