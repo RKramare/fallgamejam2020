@@ -32,7 +32,7 @@ function createEnemy(x, y)
         love.graphics.draw(enemy.sprite.img, enemy.spriteStill, posX-marginX/2, posY-marginY/2 - 5, enemy.body:getAngle(), enemy.scale, enemy.scale, 0, 0)
         
         -- Collision box
-        love.graphics.polygon("line", enemy.body:getWorldPoints(enemy.shape:getPoints()))
+        --love.graphics.polygon("line", enemy.body:getWorldPoints(enemy.shape:getPoints()))
     end
 
     return enemy
