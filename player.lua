@@ -1,4 +1,5 @@
 function loadPlayer(x, y)
+    require "bullet"
     player = {}
 
     player.spriteHeight = 64
@@ -6,6 +7,7 @@ function loadPlayer(x, y)
     player.scale = 1
     player.topMargin = 10
 
+    player.facingRight = true
     player.topSpeed = 350
     player.stillToloerance = 0.2
     player.acceleration = 1500
@@ -35,6 +37,38 @@ function loadPlayer(x, y)
     player.spriteRight = sprite.get(0, 0)
     player.spriteLeft = sprite.get(0, 1)
 
+    -- Attack sprites
+    player.attackSpritesRight = {
+        sprite.get(2, 0),
+        sprite.get(3, 0),
+        sprite.get(4, 0),
+        sprite.get(5, 0)
+    }
+    player.attackSpritesLeft = {
+        sprite.get(2, 1),
+        sprite.get(3, 1),
+        sprite.get(4, 1),
+        sprite.get(5, 1)
+    }
+    player.isAttacking = false
+    player.attackStart = -0.1
+    player.attackElapsed = player.attackStart
+    player.attackTime = 0.3
+
+    function player.attack(dt)
+        player.attackElapsed = player.attackElapsed + dt
+        if player.attackElapsed <= player.attackTime then
+            index = math.max(0, math.floor(player.attackElapsed / (player.attackTime / #player.attackSpritesRight))) + 1
+            player.spriteRight = player.attackSpritesRight[index]
+            player.spriteLeft = player.attackSpritesLeft[index]
+            if index == 4 then
+                player.bullet = loadBullet(player.facingRight, player.body:getX(), player.body:getY())
+            end
+        else
+            player.attackElapsed = player.attackStart
+        end
+    end
+
     function player.update(dt)
         local k = love.keyboard
         velX, velY = player.body:getLinearVelocity()
@@ -59,6 +93,19 @@ function loadPlayer(x, y)
             end
         end
 
+        if love.keyboard.isDown("p") and (not player.isAttacking) then
+            player.isAttacking = true
+            player.facingRight = velX > 0
+        elseif not love.keyboard.isDown("p") and player.isAttacking and player.attackElapsed == player.attackStart then
+            player.isAttacking = false
+            player.spriteRight = player.sprite.get(0, 0)
+            player.spriteLeft = player.sprite.get(0, 1)
+        end
+
+        if player.isAttacking then
+            player.attack(dt)
+        end
+
         player.body:setAngle(velX/player.topSpeed*player.maxLean)
 
     end
@@ -68,9 +115,9 @@ function loadPlayer(x, y)
         posX, posY = player.body:getWorldPoints(player.shape:getPoints())
         posY = posY - player.topMargin
         velX, velY = player.body:getLinearVelocity()
-	    if velX > player.topSpeed*player.stillToloerance then
+	    if (not player.isAttacking and velX > player.topSpeed*player.stillToloerance) or (player.isAttacking and player.facingRight) then
 		    love.graphics.draw(player.sprite.img, player.spriteRight, posX, posY, player.body:getAngle(), player.scale, player.scale, 0, 0)
-	    elseif velX < -player.topSpeed*player.stillToloerance then
+	    elseif velX < -player.topSpeed*player.stillToloerance or (player.isAttacking and not player.facingRight) then
 		    love.graphics.draw(player.sprite.img, player.spriteLeft, posX, posY, player.body:getAngle(), player.scale, player.scale, 0, 0)
 	    else
 		    love.graphics.draw(player.sprite.img, player.spriteStill, posX, posY, player.body:getAngle(), player.scale, player.scale, 0)
@@ -82,6 +129,10 @@ function loadPlayer(x, y)
             hx, hy = player.body:getWorldPoints(player.headShape:getPoint())
             love.graphics.circle("line", cx, cy, player.wheelShape:getRadius())
             love.graphics.circle("line", hx, hy, player.headShape:getRadius())
+        end
+
+        if player.bullet ~= nil then
+            player.bullet.draw()
         end
     end
 
