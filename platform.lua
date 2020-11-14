@@ -12,7 +12,7 @@ function loadPlatform()
     platform.y = platform.height / 2
 
     platform.level = 1
-    platform.currentStage = stages[1]
+    platform.currentStage = stages[platform.level]
     platform.cubeSize = platform.height/#platform.currentStage
 
     function platform.draw(w, h, key)
