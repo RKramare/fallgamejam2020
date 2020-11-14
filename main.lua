@@ -13,7 +13,7 @@ end
  
 function setWorldPhysics()
 	love.physics.setMeter(32)
-	world = love.physics.newWorld(0, 9.82*32, true)
+	world = love.physics.newWorld(0, 9.82*64, true)
 	world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 	objects = {}
 end
@@ -36,14 +36,14 @@ end
 
 function controllPlayer(dt)
 	local k = love.keyboard
-	--velX, velY = player.body:getLinearVelocity()
-	if love.keyboard.isDown("a") then
+	velX, velY = player.body:getLinearVelocity()
+	if love.keyboard.isDown("a") and velX > -250 then
 		--player.body:setLinearVelocity(-100,velY)
-		player.body:applyForce(-200,0)
+		player.body:applyForce(-1500,0)
 	end
-	if love.keyboard.isDown("d") then
+	if love.keyboard.isDown("d") and velX < 250 then
 		--player.body:setLinearVelocity(100,velY)
-		player.body:applyForce(200,0)
+		player.body:applyForce(1500,0)
 	end
 
 	if love.keyboard.isDown('c') then
@@ -57,7 +57,7 @@ function controllPlayer(dt)
 		for i,contact in ipairs(contacts) do
 			nx, ny = contact:getNormal()
 			if contact:isTouching() and ny == 1 then
-				player.body:applyLinearImpulse(0,-100)
+				player.body:applyLinearImpulse(0,-200)
 				break
 			end
 		end
@@ -88,9 +88,11 @@ function drawPlayer()
 	x, y = player.body:getWorldPoints(player.shape:getPoints())
 	velX, velY = player.body:getLinearVelocity()
 	if velX > 0 then
-		love.graphics.draw(player.img, player.spriteLeft, x, y)
+		love.graphics.draw(player.img, player.spriteRight, x, y, velX/1500, 1, 1, 0, velX/100)
+	elseif velX < 0 then
+		love.graphics.draw(player.img, player.spriteLeft, x, y, velX/1500, 1, 1, 0, velX/100)
 	else
-		love.graphics.draw(player.img, player.spriteRight, x, y)
+		love.graphics.draw(player.img, player.spriteStill, x, y)
 	end
 end
 
