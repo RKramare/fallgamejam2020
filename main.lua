@@ -43,6 +43,14 @@ end
 function love.update(dt)
 	world:update(dt)
 	controllPlayer(dt)
+	updatePlatforms(dt)
+end
+
+
+function updatePlatforms(dt)
+	for i,pl in ipairs(platforms) do
+		pl.update(dt)
+	end
 end
 
 function controllPlayer(dt)

@@ -10,7 +10,37 @@ function createPlatform(x, y, width, height, sprite)
 
     platform.scale = 1
 
+    platform.form = createPlatformArray(width, height)
 
+    function platform.draw()        
+        love.graphics.setColor(1,1,1,1)
+        for row=1,height do
+            for col=1,width do
+                love.graphics.draw(sprite.img, sprite.getFromPoint(platform.form[row][col]), 
+                (col-1)*32 + platform.x - platform.width/2, (row-1)*32 + platform.y - platform.height/2)
+            end
+        end
+		love.graphics.setColor(platform.collisionBox.color)
+		love.graphics.polygon("line", platform.collisionBox.body:getWorldPoints(platform.collisionBox.shape:getPoints()))
+    end
+
+    function platform.update(dt)
+        if love.keyboard.isDown("n") then
+            platform.setX(-dt)
+        elseif love.keyboard.isDown("m") then
+            platform.setX(dt)
+        end
+    end
+
+    function platform.setX(x)
+        platform.collisionBox.body:setX(platform.collisionBox.body:getX()+x*30)
+        platform.x, platform.y = platform.collisionBox.body:getPosition()
+    end
+
+    return platform 
+end
+
+function createPlatformArray(width, height)
     local form = {}
     if width == 1 and height == 1 then 
         -- single block
@@ -67,19 +97,5 @@ function createPlatform(x, y, width, height, sprite)
             table.insert(form, currentRow)
         end
     end
-    
-
-    function platform.draw()        
-        love.graphics.setColor(1,1,1,1)
-        for row=1,height do
-            for col=1,width do
-                love.graphics.draw(sprite.img, sprite.getFromPoint(form[row][col]), 
-                (col-1)*32 + platform.x - platform.width/2, (row-1)*32 + platform.y - platform.height/2)
-            end
-        end
-		love.graphics.setColor(platform.collisionBox.color)
-		love.graphics.polygon("line", platform.collisionBox.body:getWorldPoints(platform.collisionBox.shape:getPoints()))
-    end
-
-    return platform 
+    return form
 end
