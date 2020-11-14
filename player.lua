@@ -4,24 +4,18 @@ function loadPlayer()
     player.x = love.graphics.getWidth() / 2
     player.y = love.graphics.getHeight() / 2
 
-    player.color = {1, 0, 0, 1}
+    player.color = {1, 1, 1, 1}
 
-    player.isTouching = true
-    player.isOnFloor = true
 
-    player.speed = 200
+    player.img = love.graphics.newImage('res/rasmus.png')
+    player.spriteLeft = love.graphics.newQuad(0, 0, 32, 64, player.img:getDimensions())
+    player.spriteRight = love.graphics.newQuad(0, 64, 32, 64, player.img:getDimensions())
 
-    player.img = love.graphics.newImage('res/purple.png')
+    player.height = 64
+    player.width = 32
 
-    player.height = player.img:getHeight()
-    player.width = player.img:getWidth()
+    player.isMovingLeft = false
 
-    player.ground = player.y
-
-    player.y_velocity = 0
-
-    player.jump_height = -350
-    player.gravity = -500
 
     player.body = love.physics.newBody(world, player.x + player.width / 2, player.y - player.height / 2, "dynamic")
     player.body:setFixedRotation(true)

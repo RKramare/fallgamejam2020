@@ -80,12 +80,18 @@ end
 
 function drawPlayer()
 	love.graphics.setColor(player.color)
-	love.graphics.draw(player.img, player.x, player.y, 0, 1, 1, 0, 32)
+	x, y = player.body:getWorldPoints(player.shape:getPoints())
+	velX, velY = player.body:getLinearVelocity()
+	if velX > 0 then
+		love.graphics.draw(player.img, player.spriteLeft, x, y)
+	else
+		love.graphics.draw(player.img, player.spriteRight, x, y)
+	end
 end
 
 function drawGround()
 	love.graphics.setColor(player.color)
-	love.graphics.polygon("fill", player.body:getWorldPoints(player.shape:getPoints()))
+	--love.graphics.polygon("fill", player.body:getWorldPoints(player.shape:getPoints()))
 
 	for i, box in ipairs(objects.boxes) do
 		love.graphics.setColor(box.color)
