@@ -1,6 +1,6 @@
 function love.load()
     require "player"
-	require "platformCreator"
+	require "platform"
 	require "collisionBox"
 	require "sprite"
 
@@ -78,22 +78,13 @@ end
 
  
 function love.draw()
-	--drawStage()
+	drawPlatforms()
 	drawPlayer()
-	--drawGround()
-	for i,pl in ipairs(platforms) do
-		pl.draw()
-	end
 end
 
-function drawStage()
-	love.graphics.setColor(1, 1, 1)
-	for h=1, #platform.currentStage do
-		for w=1, #platform.currentStage[h] do
-			if platform.currentStage[h][w] ~= 0 then
-				platform.draw(w, h, platform.currentStage[h][w])
-			end
-		end
+function drawPlatforms()
+	for i,pl in ipairs(platforms) do
+		pl.draw()
 	end
 end
 
@@ -107,15 +98,5 @@ function drawPlayer()
 		love.graphics.draw(player.img, player.spriteLeft, x, y, velX/1500, 1, 1, 0, velX/100)
 	else
 		love.graphics.draw(player.img, player.spriteStill, x, y, 0, 1, 1, 0)
-	end
-end
-
-function drawGround()
-	love.graphics.setColor(player.color)
-	--love.graphics.polygon("fill", player.body:getWorldPoints(player.shape:getPoints()))
-
-	for i, box in ipairs(objects.boxes) do
-		love.graphics.setColor(box.color)
-		love.graphics.polygon("line", box.body:getWorldPoints(box.shape:getPoints()))
 	end
 end
