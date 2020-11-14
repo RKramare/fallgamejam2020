@@ -8,7 +8,7 @@ function love.load()
 	
     setWorldPhysics()
     
-    player = loadPlayer()
+    player = loadPlayer(500, 100)
 	platforms = {}
 	table.insert(platforms, createPlatform(0, 0, 20, 9))
 	table.insert(platforms, createPlatform(4*32, 0, 1, 1))
@@ -29,17 +29,18 @@ end
 function createBoxes()
 	objects.boxes = {}
 	for i=1, 3 do
-		objects.boxes[i] = createBox(i * 32 * 10, player.y + 32, 10, 1)
+		objects.boxes[i] = createBox(i * 32 * 10, 500+32, 10, 1)
 	end
 	
-	objects.boxes[4] = createBox(32, player.y, 1, 10)
-	objects.boxes[5] = createBox(love.graphics.getWidth(), player.y, 1, 10)
+	objects.boxes[4] = createBox(32, 0, 1, 10)
+	objects.boxes[5] = createBox(love.graphics.getWidth(), 0, 1, 10)
 	
 end
 
 function love.update(dt)
 	world:update(dt)
-	controllPlayer(dt)
+	player.update(dt)
+	--controllPlayer(dt)
 end
 
 function controllPlayer(dt)
@@ -76,11 +77,13 @@ end
  
 function love.draw()
 	--drawStage()
-	drawPlayer()
+	--drawPlayer()
+	
 	drawGround()
 	for i,pl in ipairs(platforms) do
 		pl.draw()
 	end
+	player.draw()
 end
 
 function drawStage()
@@ -108,7 +111,7 @@ function drawPlayer()
 end
 
 function drawGround()
-	love.graphics.setColor(player.color)
+	love.graphics.setColor(1,1,0,1)
 	--love.graphics.polygon("fill", player.body:getWorldPoints(player.shape:getPoints()))
 
 	for i, box in ipairs(objects.boxes) do
