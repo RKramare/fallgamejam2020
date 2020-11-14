@@ -6,6 +6,7 @@ function loadPlayer(x, y)
     player.scale = 1
 
     player.topSpeed = 250
+    player.stillToloerance = 0.2
     player.acceleration = 1500
     player.jumingPower = 300
     player.maxLean = 0.2
@@ -61,16 +62,16 @@ function loadPlayer(x, y)
         love.graphics.setColor(1,1,1,1)
         posX, posY = player.body:getWorldPoints(player.shape:getPoints())
 	    velX, velY = player.body:getLinearVelocity()
-	    if velX > 0 then
+	    if velX > player.topSpeed*player.stillToloerance then
 		    love.graphics.draw(player.sprite.img, player.spriteRight, posX, posY, player.body:getAngle(), player.scale, player.scale, 0, 0)
-	    elseif velX < 0 then
+	    elseif velX < -player.topSpeed*player.stillToloerance then
 		    love.graphics.draw(player.sprite.img, player.spriteLeft, posX, posY, player.body:getAngle(), player.scale, player.scale, 0, 0)
 	    else
-		    love.graphics.draw(player.sprite.img, player.spriteStill, posX, posY, 0, player.scale, player.scale, 0)
+		    love.graphics.draw(player.sprite.img, player.spriteStill, posX, posY, player.body:getAngle(), player.scale, player.scale, 0)
         end
-        love.graphics.polygon("line", player.body:getWorldPoints(player.shape:getPoints()))
+        --love.graphics.polygon("line", player.body:getWorldPoints(player.shape:getPoints()))
         cx, cy = player.body:getWorldPoints(player.wheelShape:getPoint())
-        love.graphics.circle("line", cx, cy, player.wheelShape:getRadius())
+        --love.graphics.circle("line", cx, cy, player.wheelShape:getRadius())
     end
 
 
