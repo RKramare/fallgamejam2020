@@ -26,21 +26,31 @@ function createPlatform(x, y, width, height, sprite)
 		--love.graphics.polygon("line", platform.collisionBox.body:getWorldPoints(platform.collisionBox.shape:getPoints()))
     end
 
-    function platform.update(dt)
-        if love.keyboard.isDown("n") then
-            platform.setX(-dt)
-        elseif love.keyboard.isDown("m") then
-            platform.setX(dt)
+    function platform.update(dt, player)
+        platform.setX(dt, player)
+    end
+
+    function platform.setX(dt, player)
+        playerDistFromMiddle = (player.body:getX() - love.graphics.getWidth()/2) / (love.graphics.getWidth()/2 )
+        
+        margin = 0.3
+        if math.abs(playerDistFromMiddle) > margin then
+            if playerDistFromMiddle > 0 then
+                playerDistFromMiddle = playerDistFromMiddle - margin
+            else
+                playerDistFromMiddle = playerDistFromMiddle + margin
+            end
+
+            multi = -playerDistFromMiddle * player.topSpeed * 2
+
+            player.body:setX(player.body:getX() + dt * multi / 5)
+            platform.x = platform.x + dt * multi
+            platform.collisionBox.body:setX(platform.collisionBox.body:getX() + dt * multi)
         end
+        
     end
 
-    function platform.setX(x)
-        delta = 330
-        platform.x = platform.x + x * delta
-        platform.collisionBox.body:setX(platform.collisionBox.body:getX() + x * delta)
-    end
-
-    return platform 
+    return platform
 end
 
 function createPlatformArray(width, height)

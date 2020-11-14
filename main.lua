@@ -6,7 +6,7 @@ function love.load()
 	require "level01"
 
     setWorldPhysics()
-	player = loadPlayer(love.graphics.getWidth()/2, love.graphics.getHeight()/2)
+	player = loadPlayer(love.graphics.getWidth(), love.graphics.getHeight()/2)
 	level = createLevel()
 end
  
@@ -25,7 +25,7 @@ end
 
 function updatePlatforms(dt)
 	for i,pl in ipairs(level.platforms) do
-		pl.update(dt)
+		pl.update(dt, player)
 	end
 end
 

@@ -9,9 +9,11 @@ function createLevel()
 	spriteAsphalt = loadSprite("res/asphalt.png", 32, 32)
 	spriteSidewalk = loadSprite("res/sidewalk.png", 32, 32)
     level.platforms = {}
-	table.insert(level.platforms, createPlatform(0, 17, 50, 2, spriteGround))
+    table.insert(level.platforms, createPlatform(0, 17, 150, 2, spriteGround))
+    
 	table.insert(level.platforms, createPlatform(8, 15, 4, 2, spriteAsphalt))
-	table.insert(level.platforms, createPlatform(7, 16, 1, 1, spriteAsphalt))
+    table.insert(level.platforms, createPlatform(7, 16, 1, 1, spriteAsphalt))
+    
 	table.insert(level.platforms, createPlatform(15, 13, 4, 2, spriteSidewalk))
 	table.insert(level.platforms, createPlatform(14, 14, 1, 1, spriteSidewalk))
 

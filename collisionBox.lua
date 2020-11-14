@@ -3,6 +3,7 @@ function createCollisionBox(x, y, width, height)
     scaleW, scaleH = 32, 32
 
     box.body = love.physics.newBody(world, x, y)
+    box.body:setGravityScale(0)
     box.shape = love.physics.newRectangleShape(width*scaleW, height*scaleH)
     box.fixture = love.physics.newFixture(box.body, box.shape)
     box.fixture:setUserData("box")
