@@ -72,7 +72,7 @@ function drawStage()
 	for h=1, #platform.currentStage do
 		for w=1, #platform.currentStage[h] do
 			if platform.currentStage[h][w] ~= 0 then
-				platform.keys[platform.currentStage[h][w]](w, h)
+				platform.draw(w, h, platform.currentStage[h][w])
 			end
 		end
 	end

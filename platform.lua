@@ -6,14 +6,17 @@ stages = {
         {0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0},
         {0,0,0,0,0,0,0,0},
-        {"g","g","g","g","g","g","g","g"},
-        {"g","g","g","g","g","g","g","g"}
+        {"lug","ug","ug","ug","ug","ug","ug","rug"},
+        {"llg","lg","lg","lg","lg","lg","lg","rlg"}
     }
 }
 
 
 function loadPlatform()
     platform = {}
+
+    require "ground"
+    ground = loadGround()
 
 	platform.width = love.graphics.getWidth()
 	platform.height = love.graphics.getHeight()
@@ -22,16 +25,11 @@ function loadPlatform()
     platform.y = platform.height / 2
 
     platform.currentStage = stages[1]
-    platform.cubeHeight = platform.height/#platform.currentStage
-    platform.cubeWidth = platform.width/#platform.currentStage
+    platform.cubeSize = platform.height/#platform.currentStage
 
-    function platform.drawGround(w, h)
-        love.graphics.rectangle("fill", (w-1)*platform.cubeWidth, (h-1)*platform.cubeHeight, platform.cubeWidth, platform.cubeHeight)
+    function platform.draw(w, h, key)
+        ground.draw((w-1)*platform.cubeSize, (h-1)*platform.cubeSize, platform.cubeSize/32, key)
     end
-    
-    platform.keys = {
-        ["g"] = platform.drawGround
-    }
 
     return platform
 end
