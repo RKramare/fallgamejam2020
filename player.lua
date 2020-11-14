@@ -6,11 +6,12 @@ function loadPlayer()
 
     player.color = {1, 1, 1, 1}
 
-
-    player.img = love.graphics.newImage('res/rasmus.png')
-    player.spriteStill = love.graphics.newQuad(32, 0, 32, 64, player.img:getDimensions())
-    player.spriteRight = love.graphics.newQuad(0, 0, 32, 64, player.img:getDimensions())
-    player.spriteLeft = love.graphics.newQuad(0, 64, 32, 64, player.img:getDimensions())
+    require "sprite"
+    sprite = loadSprite('res/rasmus.png', 32, 64)
+    player.img = sprite.img
+    player.spriteStill = sprite.get(1, 0)
+    player.spriteRight = sprite.get(0, 0)
+    player.spriteLeft = sprite.get(0, 1)
 
     player.height = 64
     player.width = 32

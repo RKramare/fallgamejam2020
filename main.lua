@@ -2,6 +2,9 @@ function love.load()
     require "player"
 	require "platform"
 	require "box"
+	require "sprite"
+
+	sprite = loadSprite("res/rasmus.png", 32, 64)
 	
     setWorldPhysics()
     
@@ -92,7 +95,7 @@ function drawPlayer()
 	elseif velX < 0 then
 		love.graphics.draw(player.img, player.spriteLeft, x, y, velX/1500, 1, 1, 0, velX/100)
 	else
-		love.graphics.draw(player.img, player.spriteStill, x, y)
+		love.graphics.draw(player.img, player.spriteStill, x, y, 0, 1, 1, 0)
 	end
 end
 
