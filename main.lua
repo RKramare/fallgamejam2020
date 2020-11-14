@@ -1,5 +1,6 @@
 function love.load()
     require "player"
+    require "enemy"
 	require "platform"
 	require "collisionBox"
 	require "sprite"
@@ -31,12 +32,18 @@ end
 
 function love.draw()
 	drawPlatforms()
+	drawEnemies()
 	player.draw()
-	level.draw()
 end
 
 function drawPlatforms()
 	for i,pl in ipairs(level.platforms) do
 		pl.draw()
+	end
+end
+
+function drawEnemies()
+	for i,enemy in ipairs(level.enemies) do
+		enemy.draw()
 	end
 end
