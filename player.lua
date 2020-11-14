@@ -6,10 +6,9 @@ function loadPlayer(x, y)
     player.scale = 1
     player.topMargin = 10
 
-    player.relativSpeed = 0
-    player.topSpeed = 350 -- 250
+    player.topSpeed = 350
     player.stillToloerance = 0.2
-    player.acceleration = 1500 -- 1500
+    player.acceleration = 1500
     player.jumingPower = 300
     player.maxLean = 0.2
 
@@ -25,6 +24,10 @@ function loadPlayer(x, y)
     player.wheelShape = love.physics.newCircleShape(0, 25, 8)
     player.wheelFixture = love.physics.newFixture(player.body, player.wheelShape)
 
+    -- Create Head
+    player.headShape = love.physics.newCircleShape(0, -20, 8)
+    player.headFixture = love.physics.newFixture(player.body, player.headShape)
+
     -- Set up sprite
     require "sprite"
     player.sprite = loadSprite('res/rasmus.png', player.spriteWidth, player.spriteHeight)
@@ -35,7 +38,6 @@ function loadPlayer(x, y)
     function player.update(dt)
         local k = love.keyboard
         velX, velY = player.body:getLinearVelocity()
-        velX = velX - player.relativSpeed
         if love.keyboard.isDown("a") and velX > -player.topSpeed then
             --player.body:setLinearVelocity(-100,velY)
             player.body:applyForce(-player.acceleration,0)
@@ -66,7 +68,6 @@ function loadPlayer(x, y)
         posX, posY = player.body:getWorldPoints(player.shape:getPoints())
         posY = posY - player.topMargin
         velX, velY = player.body:getLinearVelocity()
-        velX = velX - player.relativSpeed
 	    if velX > player.topSpeed*player.stillToloerance then
 		    love.graphics.draw(player.sprite.img, player.spriteRight, posX, posY, player.body:getAngle(), player.scale, player.scale, 0, 0)
 	    elseif velX < -player.topSpeed*player.stillToloerance then
@@ -74,9 +75,14 @@ function loadPlayer(x, y)
 	    else
 		    love.graphics.draw(player.sprite.img, player.spriteStill, posX, posY, player.body:getAngle(), player.scale, player.scale, 0)
         end
-        love.graphics.polygon("line", player.body:getWorldPoints(player.shape:getPoints()))
-        cx, cy = player.body:getWorldPoints(player.wheelShape:getPoint())
-        love.graphics.circle("line", cx, cy, player.wheelShape:getRadius())
+        --Show collision area
+        if false then
+            love.graphics.polygon("line", player.body:getWorldPoints(player.shape:getPoints()))
+            cx, cy = player.body:getWorldPoints(player.wheelShape:getPoint())
+            hx, hy = player.body:getWorldPoints(player.headShape:getPoint())
+            love.graphics.circle("line", cx, cy, player.wheelShape:getRadius())
+            love.graphics.circle("line", hx, hy, player.headShape:getRadius())
+        end
     end
 
 
