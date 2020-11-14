@@ -3,21 +3,11 @@ function love.load()
 	require "platform"
 	require "collisionBox"
 	require "sprite"
+	require "level01"
 
-	sprite = loadSprite("res/rasmus.png", 32, 64)
-	
     setWorldPhysics()
-    
 	player = loadPlayer(32, 3*32)
-	
-	require "sprite"
-	spriteGround = loadSprite("res/ground1.png", 32, 32)
-	platforms = {}
-	table.insert(platforms, createPlatform(0, 5*32, 3, 3, spriteGround))
-	table.insert(platforms, createPlatform(4*32, 5*32, 1, 1, spriteGround))
-	table.insert(platforms, createPlatform(6*32, 5*32, 1, 3, spriteGround))
-	table.insert(platforms, createPlatform(8*32, 5*32, 3, 1, spriteGround))
-	
+	level = createLevel()
 end
  
 function setWorldPhysics()
@@ -33,21 +23,19 @@ function love.update(dt)
 	updatePlatforms(dt)
 end
 
-
 function updatePlatforms(dt)
-	for i,pl in ipairs(platforms) do
+	for i,pl in ipairs(level.platforms) do
 		pl.update(dt)
 	end
 end
 
- 
 function love.draw()
 	drawPlatforms()
 	player.draw()
 end
 
 function drawPlatforms()
-	for i,pl in ipairs(platforms) do
+	for i,pl in ipairs(level.platforms) do
 		pl.draw()
 	end
 end
