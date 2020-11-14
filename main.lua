@@ -46,6 +46,11 @@ function controllPlayer(dt)
 		player.body:applyForce(200,0)
 	end
 
+	if love.keyboard.isDown('c') then
+		platform.increaseLevel()
+	end
+
+
 	if love.keyboard.isDown("w") then
 		contacts = player.body:getContacts()
 		

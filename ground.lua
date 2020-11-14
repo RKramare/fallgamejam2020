@@ -1,8 +1,10 @@
-function loadGround()
+function loadGround(imagePath)
+    -- Loads ground.
     ground = {}
-    ground.img = love.graphics.newImage('res/ground1.png')
+    ground.img = love.graphics.newImage(imagePath)
     loadQuads()
 
+    -- Ground types corresponding a quad.
     ground.types = {
         ["ug"] = ground.upperMiddle,
         ["lug"] = ground.upperLeft,
