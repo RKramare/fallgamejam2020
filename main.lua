@@ -32,9 +32,21 @@ function love.update(dt)
 	updateEnemies2(dt)
 	if level.goal.update(dt) then nextLevel() end
 
+	checkPlayerDeath(dt)
+end
+
+function checkPlayerDeath(dt)
 	if player.body:getY() > 64*13 then
 		restartLevel()
 		tegnell.say("Oj nu ramlade du!\nBara att börja om.", 2) 
+	end
+
+	for i,enemy in ipairs(level.enemies) do
+		if enemy.hittingPlayer(dt) then
+			restartLevel()
+			tegnell.say("Kom ihåg att hålla social distans!\nBara att börja om.", 2) 
+			break
+		end
 	end
 end
 
