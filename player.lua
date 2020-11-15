@@ -129,8 +129,8 @@ function loadPlayer(x, y)
             contacts = player.body:getContacts()
             
             for i,contact in ipairs(contacts) do
-                nx, ny = contact:getNormal()
-                if contact:isTouching() and ny <= -1+player.maxLean then
+                fixA, fixB = contact:getFixtures()
+                if contact:isTouching() and (fixA == player.wheelFixture or fixB == player.wheelFixture) then
                     player.body:applyLinearImpulse(0,-player.jumingPower)
                     break
                 end
