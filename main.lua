@@ -1,5 +1,5 @@
 function love.load()
-	s = love.window.setMode(64*15, 64*10, {resizable=true, vsync=true, msaa=0, minwidth=400, minheight=300})
+	s = love.window.setMode(64*15, 64*10, {resizable=false, vsync=true, msaa=0})
     require "player"
     require "enemy"
 	require "platform"
@@ -11,7 +11,7 @@ function love.load()
 	player = loadPlayer(love.graphics.getWidth()/2, love.graphics.getHeight()/2)
 	level = createLevel()
 end
- 
+
 function setWorldPhysics()
 	love.physics.setMeter(32)
 	world = love.physics.newWorld(0, 9.82*64, true)
