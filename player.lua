@@ -7,6 +7,7 @@ function loadPlayer(x, y)
     player.scale = 1
     player.topMargin = 10
 
+    player.lastDirectionRight = true
     player.facingRight = true
     player.topSpeed = 350
     player.stillToloerance = 0.2
@@ -21,14 +22,17 @@ function loadPlayer(x, y)
     player.body:setLinearDamping(0)
     player.shape = love.physics.newRectangleShape(0, 5, player.spriteWidth*player.scale, (player.spriteHeight-5-player.topMargin)*player.scale, 0)
     player.fixture = love.physics.newFixture(player.body, player.shape)
+    player.fixture:setFilterData( 1, 1, -1 )
 
     -- Create Wheel
     player.wheelShape = love.physics.newCircleShape(0, 25, 8)
     player.wheelFixture = love.physics.newFixture(player.body, player.wheelShape)
+    player.wheelFixture:setFilterData( 1, 1, -1 )
 
     -- Create Head
     player.headShape = love.physics.newCircleShape(0, -20, 8)
     player.headFixture = love.physics.newFixture(player.body, player.headShape)
+    player.headFixture:setFilterData( 1, 1, -1 )
 
     -- Set up sprite
     require "sprite"
@@ -54,18 +58,54 @@ function loadPlayer(x, y)
     player.attackStart = -0.1
     player.attackElapsed = player.attackStart
     player.attackTime = 0.3
+    player.hasShot = false
 
+    -- Bullets
+    player.bullets = {next=nil, prev=nil, value=nil}
+    player.nr = 0
     function player.attack(dt)
         player.attackElapsed = player.attackElapsed + dt
         if player.attackElapsed <= player.attackTime then
             index = math.max(0, math.floor(player.attackElapsed / (player.attackTime / #player.attackSpritesRight))) + 1
             player.spriteRight = player.attackSpritesRight[index]
             player.spriteLeft = player.attackSpritesLeft[index]
-            if index == 4 then
-                player.bullet = loadBullet(player.facingRight, player.body:getX(), player.body:getY())
+            if index == 4 and not player.hasShot then
+                player.hasShot = true
+                --player.bullet = loadBullet(player.facingRight, player.body:getX(), player.body:getY())
+                bullet = loadBullet(player.facingRight, player.body:getX(), player.body:getY())
+                player.bullets = {next=player.bullets, prev=nil, value = bullet}
+                player.bullets.value.name = player.nr
+                player.nr = player.nr + 1
+
             end
         else
+            player.hasShot = false
             player.attackElapsed = player.attackStart
+        end
+    end
+
+    function player.updateBullets(dt)
+        local nxt = player.bullets
+        while nxt ~= nil and nxt.value ~= nil do
+            if nxt.value.update(dt) then
+                if nxt.prev ~= nil then
+                    nxt.prev.next = nxt.next
+                else
+                    player.bullets = nxt.next
+                end
+                if nxt.next ~= nil then
+                    nxt.next.prev = nxt.prev
+                end
+            end
+            nxt = nxt.next
+        end
+    end
+
+    function player.drawBullets()
+        local nxt = player.bullets
+        while nxt ~= nil and nxt.value ~= nil do
+            nxt.value.draw()
+            nxt = nxt.next
         end
     end
 
@@ -74,10 +114,12 @@ function loadPlayer(x, y)
         velX, velY = player.body:getLinearVelocity()
         if love.keyboard.isDown("a") and velX > -player.topSpeed then
             --player.body:setLinearVelocity(-100,velY)
+            player.lastDirectionRight = false
             player.body:applyForce(-player.acceleration,0)
         end
         if love.keyboard.isDown("d") and velX < player.topSpeed then
             --player.body:setLinearVelocity(100,velY)
+            player.lastDirectionRight = true
             player.body:applyForce(player.acceleration,0)
         end    
     
@@ -95,7 +137,7 @@ function loadPlayer(x, y)
 
         if love.keyboard.isDown("p") and (not player.isAttacking) then
             player.isAttacking = true
-            player.facingRight = velX > 0
+            player.facingRight = player.lastDirectionRight
         elseif not love.keyboard.isDown("p") and player.isAttacking and player.attackElapsed == player.attackStart then
             player.isAttacking = false
             player.spriteRight = player.sprite.get(0, 0)
@@ -105,6 +147,8 @@ function loadPlayer(x, y)
         if player.isAttacking then
             player.attack(dt)
         end
+
+        player.updateBullets(dt)
 
         player.body:setAngle(velX/player.topSpeed*player.maxLean)
 
@@ -123,7 +167,7 @@ function loadPlayer(x, y)
 		    love.graphics.draw(player.sprite.img, player.spriteStill, posX, posY, player.body:getAngle(), player.scale, player.scale, 0)
         end
         --Show collision area
-        if false then
+        if true then
             love.graphics.polygon("line", player.body:getWorldPoints(player.shape:getPoints()))
             cx, cy = player.body:getWorldPoints(player.wheelShape:getPoint())
             hx, hy = player.body:getWorldPoints(player.headShape:getPoint())
@@ -131,9 +175,7 @@ function loadPlayer(x, y)
             love.graphics.circle("line", hx, hy, player.headShape:getRadius())
         end
 
-        if player.bullet ~= nil then
-            player.bullet.draw()
-        end
+        player.drawBullets()
     end
 
 
