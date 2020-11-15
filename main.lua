@@ -7,11 +7,11 @@ function love.load()
 	require "platform"
 	require "collisionBox"
 	require "sprite"
-	require "level01"
-
-    setWorldPhysics()
-	player = loadPlayer(3, 4)
-	level = createLevel()
+	require "levelmanager"
+	setWorldPhysics()
+	manager = createLevelManager()
+	level = manager.currentLevel
+	player = level.player
 end
 
 function setWorldPhysics()
@@ -25,6 +25,37 @@ function love.update(dt)
 	world:update(dt)
 	player.update(dt)
 	updateX(dt)
+end
+
+function love.keypressed(key)
+	if key == "r" then 
+		restartLevel() 
+	end
+	if key == "n" then 
+		nextLevel() 
+	end
+end
+
+function cleanLevel()
+	for i,pl in ipairs(level.platforms) do
+		pl.collisionBox.body:destroy()
+	end
+	for i,enemy in ipairs(level.enemies) do
+		enemy.body:destroy()
+	end
+	player.body:destroy()
+end
+
+function restartLevel()
+	cleanLevel()
+	level = manager.startLevel(manager.currentLevelNumber)
+	player = level.player
+end
+
+function nextLevel()
+	cleanLevel()
+	level = manager.nextLevel()
+	player = level.player
 end
 
 function love.draw()

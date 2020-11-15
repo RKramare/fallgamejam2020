@@ -1,6 +1,6 @@
 function loadPlayer(x, y)
     require "bullet"
-    player = {}
+    local player = {}
 
     player.spriteHeight = 64
     player.spriteWidth = 32
@@ -113,7 +113,9 @@ function loadPlayer(x, y)
 
     function player.update(dt)
         local k = love.keyboard
-        velX, velY = player.body:getLinearVelocity()
+        local velX
+        local velY 
+        velX, vleY= player.body:getLinearVelocity()
         if love.keyboard.isDown("a") and velX > -player.topSpeed then
             --player.body:setLinearVelocity(-100,velY)
             player.lastDirectionRight = false

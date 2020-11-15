@@ -1,5 +1,5 @@
 function createCollisionBox(x, y, width, height)
-    box = {}
+    local box = {}
     scale = 2
     scaleW, scaleH = 32*scale, 32*scale
 
