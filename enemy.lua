@@ -10,7 +10,7 @@ function createEnemy(x, y)
     enemy.acceleration = 1500
 
     -- Create Body
-    enemy.body = love.physics.newBody(world, x, y, "dynamic")
+    enemy.body = love.physics.newBody(world, x*64 - (enemy.spriteWidth/2)*enemy.scale, y*64 - (enemy.spriteHeight/2)*enemy.scale, "dynamic")
     enemy.body:setFixedRotation(true)
     enemy.body:setMass(100)
     enemy.body:setLinearDamping(0)
@@ -22,7 +22,7 @@ function createEnemy(x, y)
     -- Set up sprite
     require "sprite"
     enemy.sprite = loadSprite('res/donnis.png', enemy.spriteWidth, enemy.spriteHeight)
-    enemy.spriteStill = sprite.get(0, 0)
+    enemy.spriteStill = enemy.sprite.get(0, 0)
 
     function enemy.setX(x)
         enemy.body:setX(enemy.body:getX() + x)
@@ -38,7 +38,7 @@ function createEnemy(x, y)
         love.graphics.draw(enemy.sprite.img, enemy.spriteStill, posX-marginX, posY-marginY - 10, enemy.body:getAngle(), enemy.scale, enemy.scale, 0, 0)
         
         -- Collision box
-        love.graphics.polygon("line", enemy.body:getWorldPoints(enemy.shape:getPoints()))
+        --love.graphics.polygon("line", enemy.body:getWorldPoints(enemy.shape:getPoints()))
     end
 
     return enemy

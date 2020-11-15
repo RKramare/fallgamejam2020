@@ -25,6 +25,7 @@ function love.update(dt)
 	world:update(dt)
 	player.update(dt)
 	updateX(dt)
+	if level.goal.update(dt) then nextLevel() end
 end
 
 function love.keypressed(key)
@@ -44,6 +45,7 @@ function cleanLevel()
 		enemy.body:destroy()
 	end
 	player.body:destroy()
+	level.goal.body:destroy()
 end
 
 function restartLevel()
@@ -62,6 +64,7 @@ function love.draw()
 	drawPlatforms()
 	drawEnemies()
 	player.draw()
+	level.goal.draw()
 end
 
 function drawPlatforms()
@@ -95,6 +98,7 @@ function updateX(dt)
 		player.body:setX(player.body:getX() + playerChange)
 		updatePlatforms(platformChange)
 		updateEnemies(enemyChange)
+		level.goal.setX(platformChange)
 	end
 end
 
