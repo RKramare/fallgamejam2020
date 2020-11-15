@@ -1,5 +1,7 @@
 function love.load()
 	s = love.window.setMode(64*15, 64*10, {resizable=false, vsync=true, msaa=0})
+	love.graphics.setBackgroundColor(0.41, 0.53, 0.97)
+	love.graphics.setDefaultFilter("nearest", "nearest")
     require "player"
     require "enemy"
 	require "platform"
@@ -8,13 +10,13 @@ function love.load()
 	require "level01"
 
     setWorldPhysics()
-	player = loadPlayer(1, 8)
+	player = loadPlayer(3, 4)
 	level = createLevel()
 end
 
 function setWorldPhysics()
 	love.physics.setMeter(32)
-	world = love.physics.newWorld(0, 9.82*64, true)
+	world = love.physics.newWorld(0, 9.82*128, true)
 	world:setCallbacks(beginContact, endContact, preSolve, postSolve)
 	objects = {}
 end

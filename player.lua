@@ -4,15 +4,16 @@ function loadPlayer(x, y)
 
     player.spriteHeight = 64
     player.spriteWidth = 32
-    player.scale = 1
+    player.scale = 2
     player.topMargin = 10
+    player.sideMargin = 2
 
     player.lastDirectionRight = true
     player.facingRight = true
-    player.topSpeed = 350
+    player.topSpeed = 800
     player.stillToloerance = 0.2
-    player.acceleration = 1500
-    player.jumingPower = 300
+    player.acceleration = 8000
+    player.jumingPower = 2500
     player.maxLean = 0.2
 
     -- Create Body
@@ -20,17 +21,18 @@ function loadPlayer(x, y)
     player.body:setFixedRotation(true)
     player.body:setMass(100)
     player.body:setLinearDamping(0)
-    player.shape = love.physics.newRectangleShape(0, 5, player.spriteWidth*player.scale, (player.spriteHeight-5-player.topMargin)*player.scale, 0)
+    player.shape = love.physics.newRectangleShape(0, 5, (player.spriteWidth-player.sideMargin*2)*player.scale, (player.spriteHeight-5-player.topMargin)*player.scale, 0)
     player.fixture = love.physics.newFixture(player.body, player.shape)
     player.fixture:setFilterData( 1, 1, -1 )
 
     -- Create Wheel
-    player.wheelShape = love.physics.newCircleShape(0, 25, 8)
+    player.wheelShape = love.physics.newCircleShape(0, 20*player.scale, 12*player.scale)
     player.wheelFixture = love.physics.newFixture(player.body, player.wheelShape)
     player.wheelFixture:setFilterData( 1, 1, -1 )
+    player.wheelFixture:setFriction(1)
 
     -- Create Head
-    player.headShape = love.physics.newCircleShape(0, -20, 8)
+    player.headShape = love.physics.newCircleShape(0, -20*player.scale, 8*player.scale)
     player.headFixture = love.physics.newFixture(player.body, player.headShape)
     player.headFixture:setFilterData( 1, 1, -1 )
 
@@ -55,9 +57,9 @@ function loadPlayer(x, y)
         sprite.get(5, 1)
     }
     player.isAttacking = false
-    player.attackStart = -0.1
+    player.attackStart = -0.3
     player.attackElapsed = player.attackStart
-    player.attackTime = 0.3
+    player.attackTime = 0.5
     player.hasShot = false
 
     -- Bullets
@@ -157,7 +159,8 @@ function loadPlayer(x, y)
     function player.draw()
         love.graphics.setColor(1,1,1,1)
         posX, posY = player.body:getWorldPoints(player.shape:getPoints())
-        posY = posY - player.topMargin
+        posX = posX - player.sideMargin*player.scale
+        posY = posY - player.topMargin*player.scale
         velX, velY = player.body:getLinearVelocity()
 	    if (not player.isAttacking and velX > player.topSpeed*player.stillToloerance) or (player.isAttacking and player.facingRight) then
 		    love.graphics.draw(player.sprite.img, player.spriteRight, posX, posY, player.body:getAngle(), player.scale, player.scale, 0, 0)
@@ -167,7 +170,7 @@ function loadPlayer(x, y)
 		    love.graphics.draw(player.sprite.img, player.spriteStill, posX, posY, player.body:getAngle(), player.scale, player.scale, 0)
         end
         --Show collision area
-        if true then
+        if false then
             love.graphics.polygon("line", player.body:getWorldPoints(player.shape:getPoints()))
             cx, cy = player.body:getWorldPoints(player.wheelShape:getPoint())
             hx, hy = player.body:getWorldPoints(player.headShape:getPoint())

@@ -9,9 +9,9 @@ function loadBullet(rightDirection, x, y)
     end
 
     -- Create Body
-    bullet.body = love.physics.newBody(world, x + 0*sign, y - 5, "dynamic")
+    bullet.body = love.physics.newBody(world, x + 30*sign, y - 20, "dynamic")
     bullet.body:setFixedRotation(true)
-    bullet.body:setMass(10)
+    bullet.body:setMass(100)
     bullet.body:setLinearDamping(0)
     bullet.body:setBullet(true)
 
