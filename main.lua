@@ -8,7 +8,7 @@ function love.load()
 	require "level01"
 
     setWorldPhysics()
-	player = loadPlayer(love.graphics.getWidth()/2, love.graphics.getHeight()/2)
+	player = loadPlayer(1, 8)
 	level = createLevel()
 end
 

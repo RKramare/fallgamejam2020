@@ -15,7 +15,7 @@ function loadPlayer(x, y)
     player.maxLean = 0.2
 
     -- Create Body
-    player.body = love.physics.newBody(world, x, y, "dynamic")
+    player.body = love.physics.newBody(world, x*64 - (player.spriteWidth/2)*player.scale, y*64 - (player.spriteHeight/2)*player.scale, "dynamic")
     player.body:setFixedRotation(true)
     player.body:setMass(100)
     player.body:setLinearDamping(0)
