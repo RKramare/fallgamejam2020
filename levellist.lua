@@ -123,7 +123,9 @@ function createLevel(n)
 
     elseif n == 4 then
         --Level info
-        level.info =    "bana 4"
+        level.info =    "Ingen kan göra allt men alla kan göra något!\n"..
+                        "Under den rådande pandemin är det viktigt att hjälpas åt,\n"..
+                        "men kom ihåg att sprita händerna först."
 
         level.msgHeight = 1
 
@@ -158,7 +160,7 @@ function createLevel(n)
 
     elseif n == 5 then
         --Level info
-        level.info =    "bana 5"
+        level.info =    "Antalet smittade har ökat! Hjälp till att plana ut kurvan"
 
         level.msgHeight = 1
 
