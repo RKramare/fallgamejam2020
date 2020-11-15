@@ -1,4 +1,5 @@
 function love.load()
+	s = love.window.setMode(64*15, 64*10, {resizable=true, vsync=true, msaa=0, minwidth=400, minheight=300})
     require "player"
     require "enemy"
 	require "platform"
@@ -7,7 +8,7 @@ function love.load()
 	require "level01"
 
     setWorldPhysics()
-	player = loadPlayer(love.graphics.getWidth(), love.graphics.getHeight()/2)
+	player = loadPlayer(love.graphics.getWidth()/2, love.graphics.getHeight()/2)
 	level = createLevel()
 end
  
@@ -45,7 +46,7 @@ end
 function updateX(dt)
 	playerDistFromMiddle = (player.body:getX() - love.graphics.getWidth()/2) / (love.graphics.getWidth()/2 )
     playerChange, platformChange, enemyChange = 0, 0, 0
-	margin = 0.3
+	margin = 0.1
 	if math.abs(playerDistFromMiddle) > margin then
 		if playerDistFromMiddle > 0 then
 			playerDistFromMiddle = playerDistFromMiddle - margin
