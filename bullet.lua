@@ -20,6 +20,11 @@ function loadBullet(rightDirection, x, y)
     bullet.fixture = love.physics.newFixture(bullet.body, bullet.shape)
     bullet.fixture:setFilterData( 1, 1, -1 )
 
+    --Set sprite
+    require "sprite"
+    bullet.sprite = loadSprite("res/bullet.png", 16, 16)
+
+
     bullet.body:applyLinearImpulse(100 * sign, -10)
 
     function bullet.update(dt)
@@ -43,6 +48,7 @@ function loadBullet(rightDirection, x, y)
     function bullet.draw()
         love.graphics.setColor(1,1,1,1)
         cx, cy = bullet.body:getWorldPoints(bullet.shape:getPoint())
+        love.graphics.draw(bullet.sprite.img, cx, cy, 0, 2, 2, 20, 10)
         love.graphics.circle("line", cx, cy, bullet.shape:getRadius())
     end
 
