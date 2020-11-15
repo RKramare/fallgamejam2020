@@ -8,10 +8,13 @@ function love.load()
 	require "collisionBox"
 	require "sprite"
 	require "levelmanager"
+	require "tegnell"
 	setWorldPhysics()
 	manager = createLevelManager()
+	tegnell = loadTegnell()
 	level = manager.currentLevel
 	player = level.player
+	tegnell.say(level.info)
 end
 
 function setWorldPhysics()
@@ -24,6 +27,7 @@ end
 function love.update(dt)
 	world:update(dt)
 	player.update(dt)
+	tegnell.update(dt)
 	updateX(dt)
 	if level.goal.update(dt) then nextLevel() end
 end
@@ -34,6 +38,9 @@ function love.keypressed(key)
 	end
 	if key == "n" then 
 		nextLevel() 
+	end
+	if key == "m" then 
+		tegnell.say("hej")
 	end
 end
 
@@ -52,18 +59,21 @@ function restartLevel()
 	cleanLevel()
 	level = manager.startLevel(manager.currentLevelNumber)
 	player = level.player
+	tegnell.say(level.info)
 end
 
 function nextLevel()
 	cleanLevel()
 	level = manager.nextLevel()
 	player = level.player
+	tegnell.say(level.info)
 end
 
 function love.draw()
 	drawPlatforms()
 	drawEnemies()
 	player.draw()
+	tegnell.draw()
 	level.goal.draw()
 end
 

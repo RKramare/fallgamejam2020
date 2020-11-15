@@ -27,6 +27,9 @@ function createLevel(n)
     
     --Level specific
     if n == 1 then
+        --Level info
+        level.info = "Test bana 1"
+
         --Player
         level.player = loadPlayer(3, 8)
         
@@ -44,6 +47,9 @@ function createLevel(n)
 
 
     elseif n == 2 then
+        --Level info
+        level.info = "Säg det här på bana 2"
+
         --Player
         level.player = loadPlayer(3, 4)
         
@@ -66,6 +72,9 @@ function createLevel(n)
 
 
     elseif n == 3 then
+        --Level info
+        level.info = "Fler text objekt"
+
         --Player
         level.player = loadPlayer(8, 2)
         
