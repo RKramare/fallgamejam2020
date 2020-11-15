@@ -25,6 +25,7 @@ function love.update(dt)
 	world:update(dt)
 	player.update(dt)
 	updateX(dt)
+	updateEnemies2(dt)
 	if level.goal.update(dt) then nextLevel() end
 end
 
@@ -111,5 +112,11 @@ end
 function updateEnemies(dt)
 	for i,en in ipairs(level.enemies) do
 		en.setX(dt)
+	end
+end
+
+function updateEnemies2(dt)
+	for i,en in ipairs(level.enemies) do
+		en.update(dt)
 	end
 end
