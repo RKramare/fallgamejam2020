@@ -3,6 +3,7 @@ function getLevel(n)
     require "sprite"
     require "player"
     require "enemy"
+    require "goal"
 	spriteGround = loadSprite("res/ground1.png", 32, 32)
 	spriteAsphalt = loadSprite("res/asphalt.png", 32, 32)
     spriteSidewalk = loadSprite("res/sidewalk.png", 32, 32)
@@ -18,15 +19,32 @@ function createLevel(n)
     level.number = n
     level.platforms = {}
     level.enemies = {}
+
     
     --Level specific
     if n == 1 then
         --Player
+        level.player = loadPlayer(3, 8)
+        
+        --Goal
+        level.goal = createGoal(10, 8)
+
+
+        --Platforms
+        table.insert(level.platforms, createPlatform(0, 9, 150, 1, spriteGround))
+        table.insert(level.platforms, createPlatform(0, 0, 1, 9, spriteGround))
+
+
+
+    elseif n == 2 then
+        --Player
         level.player = loadPlayer(3, 4)
         
+        --Goal
+        level.goal = createGoal(25, 8)
 
         --Enemies
-        table.insert(level.enemies, createEnemy(15*32, 11*32))
+        table.insert(level.enemies, createEnemy(8, 8))
 
 
         --Platforms
@@ -39,21 +57,25 @@ function createLevel(n)
         table.insert(level.platforms, createPlatform(6, 4, 1, 1, spriteSidewalk))
 
 
-    elseif n == 2 then
+
+    elseif n == 3 then
         --Player
         level.player = loadPlayer(8, 2)
         
+        --Goal
+        level.goal = createGoal(15, 6)
 
         --Enemies
-        table.insert(level.enemies, createEnemy(8, 4))
-        table.insert(level.enemies, createEnemy(8, 6))
-        table.insert(level.enemies, createEnemy(8, 10))
-        table.insert(level.enemies, createEnemy(8, 20))
+        table.insert(level.enemies, createEnemy(4, 8))
+        table.insert(level.enemies, createEnemy(6, 8))
+        table.insert(level.enemies, createEnemy(10, 8))
+        table.insert(level.enemies, createEnemy(20, 8))
 
 
         --Platforms
         table.insert(level.platforms, createPlatform(0, 9, 150, 1, spriteAsphalt))
         table.insert(level.platforms, createPlatform(0, 0, 1, 9, spriteSidewalk))
+
 
     end
 

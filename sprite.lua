@@ -1,7 +1,6 @@
 
 function loadSprite(fileName, blockWidth, blockHeight)
-
-    sprite = {}
+    local sprite = {}
     sprite.img = love.graphics.newImage(fileName)
 
     function sprite.get(x, y)

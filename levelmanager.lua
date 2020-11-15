@@ -3,7 +3,7 @@ function createLevelManager()
     local levelManager = {}
     levelManager.currentLevelNumber = 1
     levelManager.currentLevel = getLevel(1)
-    levelManager.maxLevels = 2
+    levelManager.maxLevels = 3
 
     function levelManager.startLevel(number)
         return getLevel(number)
