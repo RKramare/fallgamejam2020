@@ -3,7 +3,7 @@ function createEnemy(x, y)
     
     enemy.spriteHeight = 64
     enemy.spriteWidth = 32
-    enemy.scale = 1
+    enemy.scale = 2
 
     enemy.topSpeed = 350
     enemy.acceleration = 1500
@@ -29,10 +29,10 @@ function createEnemy(x, y)
     function enemy.draw()
         love.graphics.setColor(1,1,1,1)
         posX, posY = enemy.body:getWorldPoints(enemy.shape:getPoints())
-        love.graphics.draw(enemy.sprite.img, enemy.spriteStill, posX-marginX/2, posY-marginY/2 - 5, enemy.body:getAngle(), enemy.scale, enemy.scale, 0, 0)
+        love.graphics.draw(enemy.sprite.img, enemy.spriteStill, posX-marginX, posY-marginY - 10, enemy.body:getAngle(), enemy.scale, enemy.scale, 0, 0)
         
         -- Collision box
-        --love.graphics.polygon("line", enemy.body:getWorldPoints(enemy.shape:getPoints()))
+        love.graphics.polygon("line", enemy.body:getWorldPoints(enemy.shape:getPoints()))
     end
 
     return enemy

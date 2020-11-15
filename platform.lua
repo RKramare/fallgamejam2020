@@ -3,13 +3,13 @@ function createPlatform(x, y, width, height, sprite)
     require "collisionBox"
     local platform = {}
 
-    platform.x, platform.y = x*32, y*32
-    platform.width = width*32
-    platform.height = height*32
+    platform.scale = 2
+    platform.x, platform.y = x*32*platform.scale, y*32*platform.scale
+    platform.width = width*32*platform.scale
+    platform.height = height*32*platform.scale
 
     platform.collisionBox = createCollisionBox(platform.x + platform.width/2, platform.y + platform.height/2 , width, height)
 
-    platform.scale = 1
 
     platform.form = createPlatformArray(width, height)
 
@@ -18,43 +18,18 @@ function createPlatform(x, y, width, height, sprite)
         for row=1,height do
             for col=1,width do
                 love.graphics.draw(sprite.img, sprite.getFromPoint(platform.form[row][col]), 
-                (col-1)*32 + platform.x, (row-1)*32 + platform.y)
+                (col-1)*32*platform.scale + platform.x, (row-1)*32*platform.scale + platform.y, 0, platform.scale, platform.scale, 0, 0)
             end
         end
         -- Draw collision box:
-		--love.graphics.setColor(platform.collisionBox.color)
-		--love.graphics.polygon("line", platform.collisionBox.body:getWorldPoints(platform.collisionBox.shape:getPoints()))
-    end
-
-    function platform.update(dt, player)
-        --platform.setX(dt, player)
+		love.graphics.setColor(platform.collisionBox.color)
+		love.graphics.polygon("line", platform.collisionBox.body:getWorldPoints(platform.collisionBox.shape:getPoints()))
     end
 
     function platform.setX(x)
         platform.x = platform.x + x
         platform.collisionBox.body:setX(platform.collisionBox.body:getX() + x)
     end
-
-        --[[
-        playerDistFromMiddle = (player.body:getX() - love.graphics.getWidth()/2) / (love.graphics.getWidth()/2 )
-        
-        margin = 0.3
-        if math.abs(playerDistFromMiddle) > margin then
-            if playerDistFromMiddle > 0 then
-                playerDistFromMiddle = playerDistFromMiddle - margin
-            else
-                playerDistFromMiddle = playerDistFromMiddle + margin
-            end
-
-            multi = -playerDistFromMiddle * player.topSpeed * 2
-
-            player.body:setX(player.body:getX() + dt * multi / 5)
-            platform.x = platform.x + dt * multi
-            platform.collisionBox.body:setX(platform.collisionBox.body:getX() + dt * multi)
-        end
-        --]]
-        
-
 
     return platform
 end
@@ -67,14 +42,14 @@ function createPlatformArray(width, height)
     elseif width == 1 then
         -- use column
         form = {{Point(3,0)}}
-        for col=1, width do
+        for col=1, height do
             table.insert(form, {Point(3,1)})
         end
         table.insert(form, {Point(3,2)})
     elseif height == 1 then
         -- use row
         currentRow = {Point(0,3)}
-        for row=1, height do
+        for row=1, width do
             table.insert(currentRow, Point(1,3))
         end
         table.insert(currentRow, Point(2,3))

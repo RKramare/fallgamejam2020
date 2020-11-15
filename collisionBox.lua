@@ -1,6 +1,7 @@
 function createCollisionBox(x, y, width, height)
     box = {}
-    scaleW, scaleH = 32, 32
+    scale = 2
+    scaleW, scaleH = 32*scale, 32*scale
 
     box.body = love.physics.newBody(world, x, y)
     box.body:setGravityScale(0)

@@ -17,13 +17,9 @@ function createLevel()
 end
 
 function addPlatformsToLevel(level)
-    table.insert(level.platforms, createPlatform(0, 17, 150, 2, spriteGround))
+    table.insert(level.platforms, createPlatform(0, 9, 150, 1, spriteGround))
     
-	table.insert(level.platforms, createPlatform(8, 15, 4, 2, spriteAsphalt))
-    table.insert(level.platforms, createPlatform(7, 16, 1, 1, spriteAsphalt))
-    
-	table.insert(level.platforms, createPlatform(15, 13, 4, 2, spriteSidewalk))
-	table.insert(level.platforms, createPlatform(14, 14, 1, 1, spriteSidewalk))
+    table.insert(level.platforms, createPlatform(0, 0, 1, 9, spriteGround))
 end
 
 function addEnemiesToLevel(level)
