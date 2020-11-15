@@ -127,7 +127,7 @@ function createLevel(n)
                         "Under den rådande pandemin är det viktigt att hjälpas åt,\n"..
                         "men kom ihåg att sprita händerna först."
 
-        level.msgHeight = 1
+        level.msgHeight = 3
 
         --Player
         level.player = loadPlayer(5, 6)
