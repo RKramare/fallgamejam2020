@@ -13,6 +13,10 @@ function getLevel(n)
     return level
 end 
 
+function getLevelCount()
+    return 3
+end
+
 function createLevel(n)
     --Init
     local level = {}
