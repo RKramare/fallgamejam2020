@@ -21,8 +21,8 @@ function createEnemy(x, y)
 
     -- Set up sprite
     require "sprite"
-    enemy.sprite = loadSprite('res/donnis.png', enemy.spriteWidth, enemy.spriteHeight)
-    enemy.spriteStill = enemy.sprite.get(0, 0)
+    enemy.sprite = loadSprite('res/characters.png', enemy.spriteWidth, enemy.spriteHeight)
+    enemy.spriteStill = enemy.sprite.get(math.random(0,3), math.random(0,1))
 
     function enemy.setX(x)
         enemy.body:setX(enemy.body:getX() + x)
