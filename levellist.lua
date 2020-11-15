@@ -13,6 +13,10 @@ function getLevel(n)
     return level
 end 
 
+function getLevelCount()
+    return 3
+end
+
 function createLevel(n)
     --Init
     local level = {}
@@ -27,7 +31,10 @@ function createLevel(n)
         level.player = loadPlayer(3, 8)
         
         --Goal
-        level.goal = createGoal(10, 8)
+        level.goal = createGoal(30, 8)
+
+        --Enemies
+        for i=5,28 do table.insert(level.enemies, createEnemy(i, 8)) end
 
 
         --Platforms

@@ -14,7 +14,7 @@ function createGoal(x, y)
 
     -- Set up sprite
     require "sprite"
-    goal.sprite = loadSprite('res/purple.png', goal.spriteWidth, goal.spriteHeight)
+    goal.sprite = loadSprite('res/goal.png', goal.spriteWidth, goal.spriteHeight)
     goal.spriteGoal = goal.sprite.get(0, 0)
 
 
@@ -45,8 +45,8 @@ function createGoal(x, y)
         love.graphics.draw(goal.sprite.img, goal.spriteGoal, posX, posY, 0, goal.scale, goal.scale, 0, 0)
             
         -- Draw collision box:
-		love.graphics.setColor(1, 0.5, 0)
-		love.graphics.polygon("line", goal.body:getWorldPoints(goal.shape:getPoints()))
+		--love.graphics.setColor(1, 0.5, 0)
+		--love.graphics.polygon("line", goal.body:getWorldPoints(goal.shape:getPoints()))
     end
 
     return goal
