@@ -13,7 +13,7 @@ function createEnemy(x, y)
     enemy.acceleration = 1500
 
     -- Create Body
-    enemy.body = love.physics.newBody(world, x*64 - (enemy.spriteWidth/2)*enemy.scale, y*64 - (enemy.spriteHeight/2)*enemy.scale, "dynamic")
+    enemy.body = love.physics.newBody(world, x*64 - (enemy.spriteWidth/2)*enemy.scale + 64, y*64 - (enemy.spriteHeight/2)*enemy.scale, "dynamic")
     enemy.body:setFixedRotation(true)
     enemy.body:setMass(100)
     enemy.body:setLinearDamping(0)
@@ -55,6 +55,24 @@ function createEnemy(x, y)
         end
         if enemy.frame > 8 then
             enemy.frame = 1
+        end
+    end
+
+    function enemy.hittingPlayer(dt)
+        if enemy.isInfected then
+            contacts = enemy.body:getContacts()
+            for i,contact in ipairs(contacts) do
+                if contact:isTouching() and contact:isEnabled() then
+                    fixA, fixB = contact:getFixtures()
+                    if fixA:getBody():getUserData() ~= nil and fixA:getBody():getUserData().isPlayer == true then
+                        return true
+                    end
+                    if fixB:getBody():getUserData() ~= nil and fixB:getBody():getUserData().isPlayer == true then
+                        return true
+                    end
+                end
+            end
+            return false
         end
     end
 

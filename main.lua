@@ -8,10 +8,13 @@ function love.load()
 	require "collisionBox"
 	require "sprite"
 	require "levelmanager"
+	require "tegnell"
 	setWorldPhysics()
 	manager = createLevelManager()
+	tegnell = loadTegnell()
 	level = manager.currentLevel
 	player = level.player
+	tegnell.say(level.info, level.msgHeight)
 end
 
 function setWorldPhysics()
@@ -24,9 +27,27 @@ end
 function love.update(dt)
 	world:update(dt)
 	player.update(dt)
+	tegnell.update(dt)
 	updateX(dt)
 	updateEnemies2(dt)
 	if level.goal.update(dt) then nextLevel() end
+
+	checkPlayerDeath(dt)
+end
+
+function checkPlayerDeath(dt)
+	if player.body:getY() > 64*13 then
+		restartLevel()
+		tegnell.say("Oj nu ramlade du!\nBara att börja om.", 2) 
+	end
+
+	for i,enemy in ipairs(level.enemies) do
+		if enemy.hittingPlayer(dt) then
+			restartLevel()
+			tegnell.say("Kom ihåg att hålla social distans!\nBara att börja om.", 2) 
+			break
+		end
+	end
 end
 
 function love.keypressed(key)
@@ -35,6 +56,9 @@ function love.keypressed(key)
 	end
 	if key == "n" then 
 		nextLevel() 
+	end
+	if key == "m" then 
+		tegnell.say(level.info, level.msgHeight)
 	end
 end
 
@@ -53,18 +77,21 @@ function restartLevel()
 	cleanLevel()
 	level = manager.startLevel(manager.currentLevelNumber)
 	player = level.player
+	tegnell.say(level.info, level.msgHeight)
 end
 
 function nextLevel()
 	cleanLevel()
 	level = manager.nextLevel()
 	player = level.player
+	tegnell.say(level.info, level.msgHeight)
 end
 
 function love.draw()
 	drawPlatforms()
 	drawEnemies()
 	player.draw()
+	tegnell.draw()
 	level.goal.draw()
 end
 
