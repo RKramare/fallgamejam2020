@@ -28,7 +28,14 @@ function createLevel(n)
     --Level specific
     if n == 1 then
         --Level info
-        level.info = "Test bana 1"
+        level.info =    "Hejsan Rasmus! \n" ..
+                        "Det är jag som är Anders Tegnell, statsepidemiolog vid Folkhälsomyndigheten. \n"..
+                        "Jag kommer att hjälpa dig att ta dig igenom denna coronasmittade värld oskadd.\n"..
+                        "Du kan använda 'a', 'd' och 'w' för att röra på dig.\n"..
+                        "Tryck på 'm' för att se dessa meddelanen igen."
+
+        level.msgHeight = 5
+                        
 
         --Player
         level.player = loadPlayer(13, 5)
@@ -55,6 +62,7 @@ function createLevel(n)
         --Level info
         level.info = "Säg det här på bana 2"
 
+        level.msgHeight = 1
         --Player
         level.player = loadPlayer(11, 5)
         
@@ -78,23 +86,33 @@ function createLevel(n)
     elseif n == 3 then
         --Level info
         level.info = "Fler text objekt"
+        level.msgHeight = 1
 
         --Player
-        level.player = loadPlayer(8, 2)
+        level.player = loadPlayer(4, 6)
         
         --Goal
-        level.goal = createGoal(15, 6)
+        level.goal = createGoal(102, 3)
 
         --Enemies
-        table.insert(level.enemies, createEnemy(4, 8))
-        table.insert(level.enemies, createEnemy(6, 8))
-        table.insert(level.enemies, createEnemy(10, 8))
-        table.insert(level.enemies, createEnemy(20, 8))
+        table.insert(level.enemies, createEnemy(28, 5))
+        table.insert(level.enemies, createEnemy(40, 7))
+        table.insert(level.enemies, createEnemy(76, 6))
 
 
         --Platforms
-        table.insert(level.platforms, createPlatform(0, 9, 150, 1, spriteAsphalt))
-        table.insert(level.platforms, createPlatform(0, 0, 1, 9, spriteSidewalk))
+        table.insert(level.platforms, createPlatform(0, 7, 9, 4, spriteGround))
+        table.insert(level.platforms, createPlatform(9, 7, 18, 4, spriteAsphalt))
+        table.insert(level.platforms, createPlatform(27, 6, 12, 5, spriteSidewalk))
+        table.insert(level.platforms, createPlatform(39, 8, 13, 3, spriteAsphalt))
+        table.insert(level.platforms, createPlatform(52, 6, 4, 5, spriteSidewalk))
+        table.insert(level.platforms, createPlatform(56, 5, 8, 6, spriteSidewalk))
+        table.insert(level.platforms, createPlatform(64, 7, 14, 4, spriteAsphalt))
+        table.insert(level.platforms, createPlatform(68, 3, 10, 1, spriteSidewalk))
+        table.insert(level.platforms, createPlatform(78, 3, 7, 8, spriteSidewalk))
+        table.insert(level.platforms, createPlatform(85, 4, 22, 7, spriteAsphalt))
+        table.insert(level.platforms, createPlatform(107, 3, 9, 8, spriteSidewalk))
+
 
 
     end

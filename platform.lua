@@ -22,8 +22,8 @@ function createPlatform(x, y, width, height, sprite)
             end
         end
         -- Draw collision box:
-		love.graphics.setColor(platform.collisionBox.color)
-		love.graphics.polygon("line", platform.collisionBox.body:getWorldPoints(platform.collisionBox.shape:getPoints()))
+		--love.graphics.setColor(platform.collisionBox.color)
+		--love.graphics.polygon("line", platform.collisionBox.body:getWorldPoints(platform.collisionBox.shape:getPoints()))
     end
 
     function platform.setX(x)

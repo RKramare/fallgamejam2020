@@ -14,7 +14,7 @@ function love.load()
 	tegnell = loadTegnell()
 	level = manager.currentLevel
 	player = level.player
-	tegnell.say(level.info)
+	tegnell.say(level.info, level.msgHeight)
 end
 
 function setWorldPhysics()
@@ -31,6 +31,11 @@ function love.update(dt)
 	updateX(dt)
 	updateEnemies2(dt)
 	if level.goal.update(dt) then nextLevel() end
+
+	if player.body:getY() > 64*13 then
+		restartLevel()
+		tegnell.say("Oj nu ramlade du!\nBara att börja om.", 2) 
+	end
 end
 
 function love.keypressed(key)
@@ -41,7 +46,7 @@ function love.keypressed(key)
 		nextLevel() 
 	end
 	if key == "m" then 
-		tegnell.say("hej")
+		tegnell.say(level.info, level.msgHeight)
 	end
 end
 
@@ -60,14 +65,14 @@ function restartLevel()
 	cleanLevel()
 	level = manager.startLevel(manager.currentLevelNumber)
 	player = level.player
-	tegnell.say(level.info)
+	tegnell.say(level.info, level.msgHeight)
 end
 
 function nextLevel()
 	cleanLevel()
 	level = manager.nextLevel()
 	player = level.player
-	tegnell.say(level.info)
+	tegnell.say(level.info, level.msgHeight)
 end
 
 function love.draw()
