@@ -31,18 +31,23 @@ function createLevel(n)
         level.info = "Test bana 1"
 
         --Player
-        level.player = loadPlayer(3, 8)
+        level.player = loadPlayer(13, 5)
         
         --Goal
-        level.goal = createGoal(30, 8)
-
-        --Enemies
-        for i=5,28 do table.insert(level.enemies, createEnemy(i, 8)) end
+        level.goal = createGoal(79, 2)
 
 
         --Platforms
-        table.insert(level.platforms, createPlatform(0, 9, 150, 1, spriteGround))
-        table.insert(level.platforms, createPlatform(0, 0, 1, 9, spriteGround))
+        table.insert(level.platforms, createPlatform(0, 3, 11, 8, spriteGround))
+        table.insert(level.platforms, createPlatform(11, 6, 17, 5, spriteGround))
+        table.insert(level.platforms, createPlatform(28, 5, 8, 6, spriteGround))
+        table.insert(level.platforms, createPlatform(36, 6, 33, 5, spriteGround))
+        table.insert(level.platforms, createPlatform(48, 4, 2, 2, spriteGround))
+        table.insert(level.platforms, createPlatform(50, 5, 7, 1, spriteGround))
+        table.insert(level.platforms, createPlatform(69, 5, 4, 6, spriteGround))
+        table.insert(level.platforms, createPlatform(73, 4, 3, 7, spriteGround))
+        table.insert(level.platforms, createPlatform(76, 3, 9, 8, spriteGround))
+        table.insert(level.platforms, createPlatform(85, 0, 11, 11, spriteGround))
 
 
 
@@ -51,23 +56,22 @@ function createLevel(n)
         level.info = "Säg det här på bana 2"
 
         --Player
-        level.player = loadPlayer(3, 4)
+        level.player = loadPlayer(11, 5)
         
         --Goal
-        level.goal = createGoal(25, 8)
-
-        --Enemies
-        table.insert(level.enemies, createEnemy(8, 8))
-
+        level.goal = createGoal(85, 4)
 
         --Platforms
-        table.insert(level.platforms, createPlatform(0, 9, 150, 1, spriteGround))
-        table.insert(level.platforms, createPlatform(0, 0, 1, 9, spriteGround))
-        table.insert(level.platforms, createPlatform(2, 8, 1, 1, spriteSidewalk))
-        table.insert(level.platforms, createPlatform(3, 7, 1, 1, spriteSidewalk))
-        table.insert(level.platforms, createPlatform(4, 6, 1, 1, spriteSidewalk))
-        table.insert(level.platforms, createPlatform(5, 5, 1, 1, spriteSidewalk))
-        table.insert(level.platforms, createPlatform(6, 4, 1, 1, spriteSidewalk))
+        table.insert(level.platforms, createPlatform(0, 0, 9, 11, spriteGround))
+        table.insert(level.platforms, createPlatform(9, 6, 13, 5, spriteGround))
+        table.insert(level.platforms, createPlatform(22, 7, 9, 4, spriteGround))
+        table.insert(level.platforms, createPlatform(34, 7, 6, 1, spriteGround))
+        table.insert(level.platforms, createPlatform(44, 7, 9, 4, spriteGround))
+        table.insert(level.platforms, createPlatform(53, 6, 8, 5, spriteGround))
+        table.insert(level.platforms, createPlatform(61, 7, 21, 4, spriteGround))
+        table.insert(level.platforms, createPlatform(63, 4, 9, 1, spriteGround))
+        table.insert(level.platforms, createPlatform(82, 5, 7, 6, spriteGround))
+
 
 
 
