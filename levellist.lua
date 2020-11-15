@@ -212,5 +212,11 @@ function createLevel(n)
 
     end
 
+    if level.enemies ~= nil then
+        level.infectedCount = #level.enemies
+    else
+        level.infectedCount = 0
+    end
+    level.curedCount = 0
     return level
 end

@@ -33,6 +33,7 @@ function love.update(dt)
 	if level.goal.update(dt) then nextLevel() end
 
 	checkPlayerDeath(dt)
+	checkEnemyCured()
 end
 
 function checkPlayerDeath(dt)
@@ -48,6 +49,22 @@ function checkPlayerDeath(dt)
 			break
 		end
 	end
+end
+
+function checkEnemyCured()
+	count = 0
+	for i,enemy in ipairs(level.enemies) do
+		if enemy.isInfected then
+			count = count + 1
+		end
+	end
+
+	
+	level.infectedCount = count
+	if level.enemies ~= nil then
+		level.curedCount = #level.enemies - count
+	end
+
 end
 
 function love.keypressed(key)
@@ -93,6 +110,13 @@ function love.draw()
 	player.draw()
 	tegnell.draw()
 	level.goal.draw()
+
+	if level.enemies ~= nil then
+		if #level.enemies > 0 then
+			love.graphics.setFont(love.graphics.newFont(30))
+			love.graphics.print(""..level.curedCount.."/"..#level.enemies, 30, 9*64 )
+		end
+	end
 end
 
 function drawPlatforms()
