@@ -82,7 +82,7 @@ function loadPlayer(x, y)
             end
         else
             player.hasShot = false
-            player.attackElapsed = player.attackStart
+            player.attackElapsed = 0
         end
     end
 
@@ -139,8 +139,9 @@ function loadPlayer(x, y)
 
         if love.keyboard.isDown("p") and (not player.isAttacking) then
             player.isAttacking = true
+            player.attackElapsed = player.attackStart
             player.facingRight = player.lastDirectionRight
-        elseif not love.keyboard.isDown("p") and player.isAttacking and player.attackElapsed == player.attackStart then
+        elseif not love.keyboard.isDown("p") and player.isAttacking and player.attackElapsed == 0 then
             player.isAttacking = false
             player.spriteRight = player.sprite.get(0, 0)
             player.spriteLeft = player.sprite.get(0, 1)
