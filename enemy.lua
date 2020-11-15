@@ -4,6 +4,7 @@ function createEnemy(x, y)
     enemy.spriteHeight = 64
     enemy.spriteWidth = 32
     enemy.scale = 2
+    enemy.isHittable = true
 
     enemy.topSpeed = 350
     enemy.acceleration = 1500
@@ -13,6 +14,7 @@ function createEnemy(x, y)
     enemy.body:setFixedRotation(true)
     enemy.body:setMass(100)
     enemy.body:setLinearDamping(0)
+    enemy.body:setUserData(enemy)
     marginX, marginY = 5, 10
     enemy.shape = love.physics.newRectangleShape(-marginX/2, -marginY/2 - 10, (enemy.spriteWidth-marginX)*enemy.scale, (enemy.spriteHeight-marginY)*enemy.scale, 0)
     enemy.fixture = love.physics.newFixture(enemy.body, enemy.shape)
@@ -24,6 +26,10 @@ function createEnemy(x, y)
 
     function enemy.setX(x)
         enemy.body:setX(enemy.body:getX() + x)
+    end
+
+    function enemy.hit()
+        print("Aj")
     end
 
     function enemy.draw()

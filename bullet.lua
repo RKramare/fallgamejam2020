@@ -26,6 +26,13 @@ function loadBullet(rightDirection, x, y)
         contacts = bullet.body:getContacts()
         for i,contact in ipairs(contacts) do
             if contact:isTouching() and contact:isEnabled() then
+                fixA, fixB = contact:getFixtures()
+                if fixA:getBody():getUserData() ~= nil and fixA:getBody():getUserData().isHittable == true then
+                    fixA:getBody():getUserData().hit()
+                end
+                if fixB:getBody():getUserData() ~= nil and fixB:getBody():getUserData().isHittable == true then
+                    fixB:getBody():getUserData().hit()
+                end
                 bullet.body:destroy()
                 return true
             end
